@@ -38,7 +38,7 @@ PASSWORD = 'PASSWORD'
 FOLDER   = 'Inbox'
 
 GIF_FILE_NAME = "todays_mail.gif"
-GIF_MAKER_OPTIONS = 'convert  -delay 300 -loop 0 '
+GIF_MAKER_OPTIONS = 'convert -delay 300 -loop 0 -coalesce -set dispose background '
 IMAGE_OUTPUT_PATH = '/path/to/.homeassistant/www/mail_card/'
 
 # Login Method
