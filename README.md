@@ -6,6 +6,8 @@ Note: This is not a lovelace UI card, it will be converted in a later version.
 
 <img src="https://github.com/moralmunky/HomeAssistant_Mail_Card/blob/master/mail_card_screenshot.jpg" alt="Preview of the custom mail card" width="505" height="552" />
 
+<img src="https://github.com/moralmunky/HomeAssistant_Mail_Card/blob/master/notification_screenshot.jpg" alt="Preview of the custom mail card" width="505" height="411" />
+
 ## Credits:
 
 * Mail Card based on Bram_Kragten work at [Home Assistant Community: Custom UI weather state card, with a question](https://community.home-assistant.io/t/custom-ui-weather-state-card-with-a-question/23008)
