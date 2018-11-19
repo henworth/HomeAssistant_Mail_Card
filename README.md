@@ -4,7 +4,7 @@ Card and Method for getting UPS, USPS, and FedEx delivery information in Home As
 
 Note: This is not a lovelace UI card, it will be converted in a later version.
 
-<img src="https://github.com/moralmunky/HomeAssistant_Mail/blob/master/mail_card_screenshot.jpg" alt="Preview of the custom mail card" width="505" height="552" />
+<img src="https://github.com/moralmunky/HomeAssistant_Mail_Card/blob/master/mail_card_screenshot.jpg" alt="Preview of the custom mail card" width="505" height="552" />
 
 ## Credits:
 
