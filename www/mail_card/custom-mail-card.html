@@ -1,0 +1,219 @@
+<!-- Mail Card based on Bram_Kragten work at https://community.home-assistant.io/t/custom-ui-weather-state-card-with-a-question/23008 -->
+<dom-module id='custom-mail-card'>
+  <template>
+    <style>
+      .clear {
+        clear:both;
+      }
+      .card {
+        margin:1em auto;
+        padding-left: 1em;
+        padding-right:1em;
+        position: relative;
+      }
+      .iron-icon {
+        height: 18px;
+        padding-right: 5px;
+        color: var(--paper-item-icon-color);
+      }
+      .variations {
+        font-weight:300;
+        color: var(--primary-text-color);
+        list-style:none;
+        margin-left:-2em;
+        margin-top: 1em;
+      }
+      .variations.right {
+        float: right;
+        margin-left: 0;
+        margin-right: 1em;
+      }
+      .day {
+        display:block;
+        width: 20%;
+        float:left;
+        text-align:center;
+        color: var(--primary-text-color);
+        border-right:.1em solid #d9d9d9;
+        line-height: 2;
+        box-sizing: border-box;
+      }
+      .icon.bigger {
+        width: 10em;
+        height: 10em;
+        margin-top: -4em;
+        position: absolute;
+        left: 0em;
+      }
+      .icon {
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+        vertical-align: middle;
+        background-size: contain;
+        background-position: center center;
+        background-repeat: no-repeat;
+        text-indent: -9999px;
+      }
+      .MailImg {
+        position: relative;
+        width: 100%;
+        height: auto;
+        margin-top: 1em;
+      }
+      .usps_update {
+	      font-size: .7em;
+      }
+
+    </style>
+    <div class="card">
+        <div style="clear: both;">
+	    <template is="dom-if" if="[[todayObj.state]]">
+           <span style="float: right;"><span class="iron-icon"><iron-icon icon="mdi:package-variant"></iron-icon></span>Today's Deliveries: [[nowToday]]</span>
+        </template>
+	    <template is="dom-if" if="[[transitObj.state]]">
+           <span class="iron-icon"><iron-icon icon="mdi:truck-delivery"></iron-icon></span>In Transit: [[nowTransit]]
+        </template>
+        </div>
+        <br>
+       [[nowSummary]]
+	    <br>
+      <span>
+        <ul class="variations right">
+	    <template is="dom-if" if="[[upsObj.state]]">
+           <li><span class="iron-icon"><iron-icon icon="mdi:package-variant-closed"></iron-icon></span>UPS: [[nowUps]]</li>
+           <br>
+        </template>
+        <template is="dom-if" if="[[fedexObj.state]]">
+           <li><span class="iron-icon"><iron-icon icon="mdi:package-variant-closed"></iron-icon></span>Fedex: [[nowFedex]]</li>
+           <br>
+        </template>
+        </ul>
+        <ul class="variations">
+	    <template is="dom-if" if="[[mailObj.state]]">
+           <li><span class="iron-icon"><iron-icon icon="mdi:email-outline"></iron-icon></span>Mail: [[nowMail]]</li>
+           <br>
+        </template>
+        <template is="dom-if" if="[[packageObj.state]]">
+           <li><span class="iron-icon"><iron-icon icon="mdi:package-variant-closed"></iron-icon></span>USPS: [[nowPackage]]</li>
+           <br>
+        </template>
+        </ul>
+      </span>
+      <img class="MailImg clear" src="/local/mail_card/todays_mail.gif" />
+      <span class="usps_update">Checked: [[nowUsps_update]]</span>
+    </div>
+
+  </template>
+</dom-module>
+
+<script>
+(function () {
+  'use strict';
+  
+  Polymer({
+    is: 'custom-mail-card',
+
+    properties: {
+      hass: {
+        type: Object,
+      },
+      stateObj: {
+        type: Object,
+      },
+      upsObj: {
+        type: Object,
+        observer: 'checkRequirements',
+        computed: 'computeUpsObj(hass, stateObj)',
+      },
+      fedexObj: {
+        type: Object,
+        observer: 'checkRequirements',
+        computed: 'computeFedexObj(hass, stateObj)',
+      },
+      packageObj: {
+        type: Object,
+        observer: 'checkRequirements',
+        computed: 'computePackageObj(hass, stateObj)',
+      },
+      mailObj: {
+        type: Object,
+        observer: 'checkRequirements',
+        computed: 'computeMailObj(hass, stateObj)',
+      },
+      usps_updateObj: {
+        type: Object,
+        observer: 'checkRequirements',
+        computed: 'computeUsps_updateObj(hass, stateObj)',
+      },
+      transitObj: {
+        type: Object,
+        observer: 'checkRequirements',
+        computed: 'computeTransitObj(hass, stateObj)',
+      },
+      todayObj: {
+        type: Object,
+        observer: 'checkRequirements',
+        computed: 'computeTodayObj(hass, stateObj)',
+      },
+      summaryObj: {
+        type: Object,
+        observer: 'checkRequirements',
+        computed: 'computeSummaryObj(hass, stateObj)',
+      },
+    },
+
+    computeUpsObj: function (hass, stateObj) {
+      return stateObj && stateObj.attributes && stateObj.attributes.config && stateObj.attributes.config.ups ? hass.states[stateObj.attributes.config.ups] : null;
+    },
+    computeFedexObj: function (hass, stateObj) {
+      return stateObj && stateObj.attributes && stateObj.attributes.config && stateObj.attributes.config.fedex ? hass.states[stateObj.attributes.config.fedex] : null;
+    },
+    computePackageObj: function (hass, stateObj) {
+      return stateObj && stateObj.attributes && stateObj.attributes.config && stateObj.attributes.config.package ? hass.states[stateObj.attributes.config.package] : null;
+    },
+    computeMailObj: function (hass, stateObj) {
+      return stateObj && stateObj.attributes && stateObj.attributes.config && stateObj.attributes.config.mail ? hass.states[stateObj.attributes.config.mail] : null;
+    },
+    computeUsps_updateObj: function (hass, stateObj) {
+      return stateObj && stateObj.attributes && stateObj.attributes.config && stateObj.attributes.config.usps_update ? hass.states[stateObj.attributes.config.usps_update] : null;
+    },
+    computeTransitObj: function (hass, stateObj) {
+      return stateObj && stateObj.attributes && stateObj.attributes.config && stateObj.attributes.config.transit ? hass.states[stateObj.attributes.config.transit] : null;
+    },
+    computeTodayObj: function (hass, stateObj) {
+      return stateObj && stateObj.attributes && stateObj.attributes.config && stateObj.attributes.config.today ? hass.states[stateObj.attributes.config.today] : null;
+    },
+    computeSummaryObj: function (hass, stateObj) {
+      return stateObj && stateObj.attributes && stateObj.attributes.config && stateObj.attributes.config.summary ? hass.states[stateObj.attributes.config.summary] : null;
+    },
+
+    checkRequirements: function () {
+      if (this.upsObj != null) {
+        this.nowUps = this.upsObj.state;
+      }
+      if (this.fedexObj != null) {
+        this.nowFedex = this.fedexObj.state;
+      }
+      if (this.packageObj != null) {
+        this.nowPackage = this.packageObj.state;
+      }
+      if (this.mailObj != null) {
+        this.nowMail = this.mailObj.state;
+      }
+      if (this.usps_updateObj != null) {
+        this.nowUsps_update = this.usps_updateObj.state;
+      }
+      if (this.transitObj != null) {
+        this.nowTransit = this.transitObj.state;
+      }
+      if (this.todayObj != null) {
+        this.nowToday = this.todayObj.state;
+      }
+      if (this.summaryObj != null) {
+        this.nowSummary = this.summaryObj.state;
+      }
+    },
+  });
+}());
+</script>
