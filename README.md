@@ -1,6 +1,6 @@
 # HomeAssistant_Mail
 
-Card, Method and IOS Notification for getting UPS, USPS, and FedEx delivery information in Home Assistant
+Card, Method and iOS Notification for getting UPS, USPS, and FedEx delivery information in Home Assistant
 
 Note: This is not a lovelace UI card, it will be converted in a later version.
 
