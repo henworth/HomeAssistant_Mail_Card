@@ -281,12 +281,12 @@ automation:
   condition:
   #send only if mail or packages are more than 0
   condition:
-    condition: or
-    conditions:
-      - condition: template
-        value_template: "{{ states('sensor.mail_deliveries_today') | int > 0 }}"
-      - condition: template
-        value_template: "{{ states('sensor.mail_usps') | int > 0 }}"
+    - condition: or
+      conditions:
+        - condition: template
+          value_template: "{{ states('sensor.mail_deliveries_today') | int > 0 }}"
+        - condition: template
+          value_template: "{{ states('sensor.mail_usps') | int > 0 }}"
   action:
     - service_template: >
         notify.ios
