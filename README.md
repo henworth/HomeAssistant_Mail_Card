@@ -90,11 +90,12 @@ Line 41 IMAGE_OUTPUT_PATH
 ```
 
 ## mail_package.yaml
-
+```
 Line 133 Change the path to the full image path defined in the mail.py line 41 IMAGE_OUTPUT_PATH.
 Line 165, 166 #Sign up for UPS MyChoice and add your credentials
 Line 292 Define the notify component setup in Home Assistant
 Line 298 Change the URL to match Home Assistants and the location of the todays_mail.gif
+```
 
 ## Running the above Python Program as a Service/Daemon
 
@@ -106,7 +107,7 @@ cd /etc/systemd/system
 sudo vim homeassistant_mail_check.service
 ```
 Enter insert mode ( type i) then type the following:
-My installation is in a venv that is created in /srv/homeassistant/. Please adjust these paths as needed.
+My installation is in a venv that is created in /srv/homeassistant/. Please adjust these paths and user as needed.
 ```
 [Unit]
 Description=Home Assistant Mail Count Retriever
