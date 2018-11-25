@@ -55,6 +55,11 @@ Upload the files into inside the Home Assistant .homeassistant/ folder as struct
 ```
 ## Setup Mail.py file
 
+Make the file executable
+```
+chmod +x /path/to/.homeassistant/includes/mail.py
+```
+
 Enter the details for the following variables used in the file
 
 MQTT Details
@@ -101,6 +106,7 @@ cd /etc/systemd/system
 sudo vim homeassistant_mail_check.service
 ```
 Enter insert mode ( type i) then type the following:
+My installation is in a venv that is created in /srv/homeassistant/. Please adjust these paths as needed.
 ```
 [Unit]
 Description=Home Assistant Mail Count Retriever
