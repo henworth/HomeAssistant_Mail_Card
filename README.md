@@ -59,6 +59,11 @@ Make the file executable
 ```
 chmod +x /path/to/.homeassistant/includes/mail.py
 ```
+or
+```
+sudo chmod +x /path/to/.homeassistant/includes/mail.py
+```
+
 
 Enter the details for the following variables used in the file
 
@@ -107,7 +112,7 @@ cd /etc/systemd/system
 sudo vim homeassistant_mail_check.service
 ```
 Enter insert mode ( type i) then type the following:
-My installation is in a venv that is created in /srv/homeassistant/. Please adjust these paths and user as needed.
+The User and ExecStart should make your Home Assistant installation. My installation is in a venv that is created in /srv/homeassistant/. Adjust the user and paths as needed.
 ```
 [Unit]
 Description=Home Assistant Mail Count Retriever
