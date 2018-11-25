@@ -112,7 +112,7 @@ cd /etc/systemd/system
 sudo vim homeassistant_mail_check.service
 ```
 Enter insert mode ( type i) then type the following:
-The User and ExecStart should make your Home Assistant installation. My installation is in a venv that is created in /srv/homeassistant/. Adjust the user and paths as needed.
+The User and ExecStart should be sdjusted to your Home Assistant installation configuration. My installation is in a venv that is created in /srv/homeassistant/.
 ```
 [Unit]
 Description=Home Assistant Mail Count Retriever
