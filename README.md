@@ -17,7 +17,7 @@ Note: This is not a lovelace UI card, it will be converted in a later version.
 ## Issues:
 
 * In Transit currently shows the count of delivered items for USPS and FedEx. The Broken official [USPS](https://www.home-assistant.io/components/usps/) and [FedEx](https://www.home-assistant.io/components/sensor.fedex/) components used to provide in transit data. 
-* USPS Informed Delivery GIF: A browser cache reset needs to be performed to see the correct updated image in the frontend. MacOS Safari/Chrome, iOS app.
+* ~~USPS Informed Delivery GIF: A browser cache reset needs to be performed to see the correct updated image in the frontend. MacOS Safari/Chrome, iOS app.~~
 * Throws the following to errors while running the script but finishes everything correctly.
 ```
 convert-im6.q16: unable to open image `/home/homeassistant/.homeassistant/www/mail_card/Mail': No such file or directory @ error/blob.c/OpenBlob/2701.
