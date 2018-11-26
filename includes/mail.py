@@ -23,9 +23,10 @@ MQTT_USERNAME = "homeassistant"
 MQTT_PASSWORD = "PASSWORD"
 
 MQTT_USPS_MAIL_TOPIC = "/mail/usps/mail"
-MQTT_USPS_PACKAGE_TOPIC = "/mail/usps/packages"
+MQTT_USPS_DELIVERING_TOPIC = "/mail/usps/delivering"
+MQTT_USPS_DELIVERED_TOPIC = "/mail/usps/delivered"
+MQTT_FEDEX_DELIVERED_TOPIC = "/mail/fedex/delivered"
 MQTT_UPDATE_TIME_TOPIC =  "/mail/update"
-MQTT_FEDEX_PACKAGE_TOPIC = "/mail/fedex/packages"
 
 #Interval in seconds to check the email account
 SLEEP_TIME_IN_SECONDS = 300
@@ -118,9 +119,28 @@ def get_mails(account):
                 
     return image_count
 
+# gets USPS delivering packages count
+###############################################################################
+def usps_delivering_count(account):
+    count = 0 
+    today = get_formatted_date()
+
+    rv, data = account.search(None, 
+              '(FROM "auto-reply@usps.com" SUBJECT "Expected Delivery on" SINCE "' + 
+              today + '")')
+
+    if rv == 'OK':
+        count = len(data[0].split())
+        #use to test
+        #count = 5
+
+    print_message("Found '{}' USPS packages out for delivery".format(count))
+
+    return count
+
 # gets USPS delivered packages count
 ###############################################################################
-def package_count(account):
+def usps_delivered_count(account):
     count = 0 
     today = get_formatted_date()
 
@@ -133,13 +153,13 @@ def package_count(account):
         #use to test
         #count = 5
 
-    print_message("Found '{}' USPS packages".format(count))
+    print_message("Found '{}' USPS packages delivered".format(count))
 
     return count
 
-# gets FedEx delivered count
+# gets FedEx delivered package count
 ###############################################################################
-def fedex_package_count(account):
+def fedex_delivered_count(account):
     count = 0 
     today = get_formatted_date()
 
@@ -152,7 +172,7 @@ def fedex_package_count(account):
         #use to test
         #count = 4
 
-    print_message("Found '{}' FedEx packages".format(count))
+    print_message("Found '{}' FedEx packages delivered".format(count))
 
     return count
     
@@ -218,13 +238,17 @@ try:
         mc = get_mails(account)
         mqttc.publish(MQTT_USPS_MAIL_TOPIC, str(mc), qos=0, retain=False)
         
-        # Get the package count and drop it in the MQTT
-        pc = package_count(account)
-        mqttc.publish(MQTT_USPS_PACKAGE_TOPIC, str(pc), qos=0, retain=False)
+        # Get the USPS delivering count and drop it in the MQTT
+        pc = usps_delivering_count(account)
+        mqttc.publish(MQTT_USPS_DELIVERING_TOPIC, str(pc), qos=0, retain=False)
         
-        # Get the package count and drop it in the MQTT
-        pc = fedex_package_count(account)
-        mqttc.publish(MQTT_FEDEX_PACKAGE_TOPIC, str(pc), qos=0, retain=False)
+        # Get the USPS delivered count and drop it in the MQTT
+        pc = usps_delivered_count(account)
+        mqttc.publish(MQTT_USPS_DELIVERED_TOPIC, str(pc), qos=0, retain=False)
+        
+        # Get the FedEx delivery count and drop it in the MQTT
+        pc = fedex_delivered_count(account)
+        mqttc.publish(MQTT_FEDEX_DELIVERED_TOPIC, str(pc), qos=0, retain=False)
         
         # Get date and time and drop it in the MQTT
         pc = update_time()
