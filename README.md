@@ -24,7 +24,10 @@ convert-im6.q16: unable to open image `/home/homeassistant/.homeassistant/www/ma
 convert-im6.q16: no decode delegate for this image format `' @ error/constitute.c/ReadImage/504.
 convert-im6.q16: unable to open image `Attachment.txt': No such file or directory @ error/blob.c/OpenBlob/2701.
 ```
-
+* Home Assistant gives connection reset error when the script disconnects from embedded MQTT server. Update date was not getting published, added a 5 second sleep to see if this improves.
+```
+[hbmqtt.mqtt.protocol.handler] BrokerProtocolHandler Unhandled exception in reader coro: ConnectionResetError(104, 'Connection reset by peer')
+```
 #Home Assistant Configuration
 
 ## Requirements:
