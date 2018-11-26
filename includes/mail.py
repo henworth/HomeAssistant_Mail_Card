@@ -236,23 +236,23 @@ try:
         
         # Get the mail count and drop it in the MQTT
         mc = get_mails(account)
-        mqttc.publish(MQTT_USPS_MAIL_TOPIC, str(mc), qos=0, retain=False)
+        mqttc.publish(MQTT_USPS_MAIL_TOPIC, str(mc), qos=0, retain=True)
         
         # Get the USPS delivering count and drop it in the MQTT
         pc = usps_delivering_count(account)
-        mqttc.publish(MQTT_USPS_DELIVERING_TOPIC, str(pc), qos=0, retain=False)
+        mqttc.publish(MQTT_USPS_DELIVERING_TOPIC, str(pc), qos=0, retain=True)
         
         # Get the USPS delivered count and drop it in the MQTT
         pc = usps_delivered_count(account)
-        mqttc.publish(MQTT_USPS_DELIVERED_TOPIC, str(pc), qos=0, retain=False)
+        mqttc.publish(MQTT_USPS_DELIVERED_TOPIC, str(pc), qos=0, retain=True)
         
         # Get the FedEx delivery count and drop it in the MQTT
         pc = fedex_delivered_count(account)
-        mqttc.publish(MQTT_FEDEX_DELIVERED_TOPIC, str(pc), qos=0, retain=False)
+        mqttc.publish(MQTT_FEDEX_DELIVERED_TOPIC, str(pc), qos=0, retain=True)
         
         # Get date and time and drop it in the MQTT
         pc = update_time()
-        mqttc.publish(MQTT_UPDATE_TIME_TOPIC, str(pc), qos=0, retain=False)
+        mqttc.publish(MQTT_UPDATE_TIME_TOPIC, str(pc), qos=0, retain=True)
         
         # if there are no mails, make sure you delete the old file, 
         # so that the next day, you don't see yesterday's mails
