@@ -261,6 +261,8 @@ try:
             os.remove(IMAGE_OUTPUT_PATH + GIF_FILE_NAME)
             copyfile(IMAGE_OUTPUT_PATH + "nomail.gif", IMAGE_OUTPUT_PATH + GIF_FILE_NAME)
 
+        #Adding sleep to attempt to control hamqtt connection reset errors and information not transfering
+        time.sleep(5)
         # disconnect from MQTT
         mqttc.disconnect()
         
