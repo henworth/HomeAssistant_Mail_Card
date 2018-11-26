@@ -29,6 +29,16 @@ convert-im6.q16: unable to open image `Attachment.txt': No such file or director
 
 ## Requirements:
 
+[USPS Informed Delivery:](https://informeddelivery.usps.com/) account and all nortifications turned on for email with the email address you will have the script check.
+
+<img src="https://github.com/moralmunky/HomeAssistant_Mail_Card/blob/master/USPS_Delivery_Notifications.jpg" alt="USPS Informed Delivery notification settings." />
+
+[FedEx Delivery Manager:](https://www.fedex.com/apps/fdmenrollment/) account and all nortifications turned on for email with the email address you will have the script check.
+
+<img src="https://github.com/moralmunky/HomeAssistant_Mail_Card/blob/master/FedEx_Delivery_Notifications.jpg" alt="FedEx notification settings." />
+
+[UPS MyChoice:](https://wwwapps.ups.com/mcdp?loc=en_US) account. No Notifications are nessesary as the component checks the service for details instead of email.
+
 paho-mqtt and imagemagick PIP packages are installed within the Home Assistant environment
 ```
 sudo pip install paho-mqtt
