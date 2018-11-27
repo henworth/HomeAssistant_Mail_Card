@@ -2,7 +2,7 @@
 
 Card, Method and iOS Notification for getting UPS, USPS, and FedEx delivery information in Home Assistant
 
-Note: This is not a lovelace UI card, it will be converted in a later version.
+The current and Lovelace UI are supported, insturctions below.
 
 <img src="https://github.com/moralmunky/HomeAssistant_Mail_Card/blob/master/mail_card_screenshot.jpg" alt="Preview of the custom mail card" width="505" height="552" />
 
@@ -47,11 +47,11 @@ paho-mqtt and imagemagick PIP packages are installed within the Home Assistant e
 sudo pip install paho-mqtt
 sudo apt-get install imagemagick
 ```
-The Home Assistant configuration.yaml must have [packages:](https://www.home-assistant.io/components/mqtt/) and [mqtt:](https://www.home-assistant.io/components/mqtt/) defined.
+The Home Assistant configuration.yaml must have [packages:](https://www.home-assistant.io/components/mqtt/) (Current UI only, not needed for Lovelace UI) and [mqtt:](https://www.home-assistant.io/components/mqtt/) defined.
 
 Example:
 ```
-packages: !include_dir_named includes/packages
+packages: !include_dir_named includes/packages (Current UI only, not needed for Lovelace UI)
 mqtt:
   password: !secret mqtt_pass
 ```
@@ -60,12 +60,46 @@ mqtt:
 
 Upload the files into inside the Home Assistant .homeassistant/ folder as structured in the repository
 ```
-.homeassistant/www/mail_card/custom-mail-card.html
+.homeassistant/includes/packages/mail_package.yaml (Current UI only, not needed for Lovelace UI)
+.homeassistant/www/mail_card/custom-mail-card.html (Current UI only, not needed for Lovelace UI)
 .homeassistant/www/mail_card/nomail.gif
 .homeassistant/www/mail_card/todays_mail.gif
 .homeassistant/includes/mail.py
-.homeassistant/includes/packages/mail_package.yaml
 ```
+
+## mail_package.yaml (Current UI only, not needed for Lovelace UI)
+```
+Line 133 Change the path to the full image path defined in the mail.py line 41 IMAGE_OUTPUT_PATH.
+Line 165, 166 #Sign up for UPS MyChoice and add your credentials
+Line 292 Define the notify component setup in Home Assistant
+Line 298 Change the URL to match Home Assistants and the location of the todays_mail.gif
+```
+## ui-lovelace.yaml (Lovelace UI setup)
+
+Add the js path relative to the /loca/ path to the resources section.
+```
+resources:
+  - url: /local/mail_card/mail-card.js
+    type: js
+```
+Add the card configuration to the cards: section of the view you want to display the card in.
+```
+views:
+  - icon: mdi:home 
+    title: Home
+    cards:
+      - type: "custom:mail-card"
+        ups: sensor.mail_ups
+        fedex: sensor.mail_fedex_delivered
+        usps_package: sensor.mail_usps_packages
+        mail: sensor.mail_usps
+        in_transit: sensor.mail_packages_in_transit
+        deliver_today: sensor.mail_deliveries_today
+        summary: sensor.mail_deliveries_message
+        last_update: sensor.mail_update
+        mail_image: /local/mail_card/todays_mail.gif
+```
+
 ## Setup Mail.py file
 
 Make the file executable
@@ -76,7 +110,6 @@ or
 ```
 sudo chmod +x /path/to/.homeassistant/includes/mail.py
 ```
-
 
 Enter the details for the following variables used in the file
 
@@ -105,14 +138,6 @@ Line 37 FOLDER
 Mail image path
 ```
 Line 41 IMAGE_OUTPUT_PATH
-```
-
-## mail_package.yaml
-```
-Line 133 Change the path to the full image path defined in the mail.py line 41 IMAGE_OUTPUT_PATH.
-Line 165, 166 #Sign up for UPS MyChoice and add your credentials
-Line 292 Define the notify component setup in Home Assistant
-Line 298 Change the URL to match Home Assistants and the location of the todays_mail.gif
 ```
 
 ## Running the above Python Program as a Service/Daemon
