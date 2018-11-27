@@ -4,9 +4,7 @@ Card, Method and iOS Notification for getting UPS, USPS, and FedEx delivery info
 
 The current and Lovelace UI are supported, insturctions below.
 
-<img src="https://github.com/moralmunky/HomeAssistant_Mail_Card/blob/master/mail_card_screenshot.jpg" alt="Preview of the custom mail card" width="505" height="552" />
-
-<img src="https://github.com/moralmunky/HomeAssistant_Mail_Card/blob/master/notification_screenshot.jpg" alt="Preview of the custom mail card" width="505" height="411" />
+<img src="https://github.com/moralmunky/HomeAssistant_Mail_Card/blob/master/mail_card_screenshot.jpg" alt="Preview of the custom mail card" width="350" />  <img src="https://github.com/moralmunky/HomeAssistant_Mail_Card/blob/master/notification_screenshot.jpg" alt="Preview of the custom mail card" width="350" />
 
 ## Credits:
 
@@ -34,11 +32,11 @@ convert-im6.q16: unable to open image `Attachment.txt': No such file or director
 
 [USPS Informed Delivery:](https://informeddelivery.usps.com/) account and all nortifications turned on for email with the email address you will have the script check.
 
-<img src="https://github.com/moralmunky/HomeAssistant_Mail_Card/blob/master/USPS_Delivery_Notifications.jpg" alt="USPS Informed Delivery notification settings." />
+<img src="https://github.com/moralmunky/HomeAssistant_Mail_Card/blob/master/USPS_Delivery_Notifications.jpg" alt="USPS Informed Delivery notification settings."  width="350"/>
 
 [FedEx Delivery Manager:](https://www.fedex.com/apps/fdmenrollment/) account and all nortifications turned on for email with the email address you will have the script check.
 
-<img src="https://github.com/moralmunky/HomeAssistant_Mail_Card/blob/master/FedEx_Delivery_Notifications.jpg" alt="FedEx notification settings." />
+<img src="https://github.com/moralmunky/HomeAssistant_Mail_Card/blob/master/FedEx_Delivery_Notifications.jpg" alt="FedEx notification settings."  width="350"/>
 
 [UPS MyChoice:](https://wwwapps.ups.com/mcdp?loc=en_US) account. No Notifications are nessesary as the component checks the service for details instead of email.
 
