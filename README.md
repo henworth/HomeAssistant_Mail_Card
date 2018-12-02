@@ -45,11 +45,11 @@ paho-mqtt and imagemagick PIP packages are installed within the Home Assistant e
 sudo pip install paho-mqtt
 sudo apt-get install imagemagick
 ```
-The Home Assistant configuration.yaml must have [packages:](https://www.home-assistant.io/components/mqtt/) (Current UI only, not needed for Lovelace UI) and [mqtt:](https://www.home-assistant.io/components/mqtt/) defined.
+The Home Assistant configuration.yaml must have [packages:](https://www.home-assistant.io/docs/configuration/packages/) and [mqtt:](https://www.home-assistant.io/components/mqtt/) defined.
 
 Example:
 ```
-packages: !include_dir_named includes/packages (Current UI only, not needed for Lovelace UI)
+packages: !include_dir_named includes/packages
 mqtt:
   password: !secret mqtt_pass
 ```
@@ -58,14 +58,14 @@ mqtt:
 
 Upload the files into inside the Home Assistant .homeassistant/ folder as structured in the repository
 ```
-.homeassistant/includes/packages/mail_package.yaml (Current UI only, not needed for Lovelace UI)
+.homeassistant/includes/packages/mail_package.yaml
 .homeassistant/www/mail_card/custom-mail-card.html (Current UI only, not needed for Lovelace UI)
 .homeassistant/www/mail_card/nomail.gif
 .homeassistant/www/mail_card/todays_mail.gif
 .homeassistant/includes/mail.py
 ```
 
-## mail_package.yaml (Current UI only, not needed for Lovelace UI)
+## mail_package.yaml
 ```
 Line 133 Change the path to the full image path defined in the mail.py line 41 IMAGE_OUTPUT_PATH.
 Line 165, 166 #Sign up for UPS MyChoice and add your credentials
