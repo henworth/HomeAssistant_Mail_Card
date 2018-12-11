@@ -100,6 +100,8 @@ views:
 
 ## Setup Mail.py file
 
+Note: This file can we run from the same machine or anyother machine on the network that can communicate to the MQTT server that home assistant uses.
+
 Make the file executable
 ```
 chmod +x /path/to/.homeassistant/includes/mail.py
