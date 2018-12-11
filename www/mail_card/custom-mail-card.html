@@ -81,21 +81,21 @@
       <span>
         <ul class="variations right">
 	    <template is="dom-if" if="[[upsObj.state]]">
-           <li><span class="iron-icon"><iron-icon icon="mdi:package-variant-closed"></iron-icon></span>UPS: [[nowUps]]</li>
+           <li><span class="iron-icon"><iron-icon icon="mdi:package-variant-closed"></iron-icon></span><a href="https://wwwapps.ups.com/mcdp" title="Open the UPS MyChoice site" target="_blank">UPS: [[nowUps]]<a/></li>
            <br>
         </template>
         <template is="dom-if" if="[[fedexObj.state]]">
-           <li><span class="iron-icon"><iron-icon icon="mdi:package-variant-closed"></iron-icon></span>Fedex: [[nowFedex]]</li>
+           <li><span class="iron-icon"><iron-icon icon="mdi:package-variant-closed"></iron-icon></span><a href="https://www.fedex.com/apps/fedextracking" title="Open the Fedex site" target="_blank">Fedex: [[nowFedex]]<a/></li>
            <br>
         </template>
         </ul>
         <ul class="variations">
 	    <template is="dom-if" if="[[mailObj.state]]">
-           <li><span class="iron-icon"><iron-icon icon="mdi:email-outline"></iron-icon></span>Mail: [[nowMail]]</li>
+           <li><span class="iron-icon"><iron-icon icon="mdi:email-outline"></iron-icon></span><a href="https://informeddelivery.usps.com/" title="Open the USPS Informed Delivery site" target="_blank">Mail: [[nowMail]]<a/></li>
            <br>
         </template>
-        <template is="dom-if" if="[[packageObj.state]]">
-           <li><span class="iron-icon"><iron-icon icon="mdi:package-variant-closed"></iron-icon></span>USPS: [[nowPackage]]</li>
+        <template is="dom-if" if="[[uspsObj.state]]">
+           <li><span class="iron-icon"><iron-icon icon="mdi:package-variant-closed"></iron-icon></span><a href="https://informeddelivery.usps.com/" title="Open the USPS Informed Delivery site" target="_blank">USPS: [[nowUsps]]</a></li>
            <br>
         </template>
         </ul>
@@ -131,10 +131,10 @@
         observer: 'checkRequirements',
         computed: 'computeFedexObj(hass, stateObj)',
       },
-      packageObj: {
+      uspsObj: {
         type: Object,
         observer: 'checkRequirements',
-        computed: 'computePackageObj(hass, stateObj)',
+        computed: 'computeUspsObj(hass, stateObj)',
       },
       mailObj: {
         type: Object,
@@ -169,8 +169,8 @@
     computeFedexObj: function (hass, stateObj) {
       return stateObj && stateObj.attributes && stateObj.attributes.config && stateObj.attributes.config.fedex ? hass.states[stateObj.attributes.config.fedex] : null;
     },
-    computePackageObj: function (hass, stateObj) {
-      return stateObj && stateObj.attributes && stateObj.attributes.config && stateObj.attributes.config.package ? hass.states[stateObj.attributes.config.package] : null;
+    computeUspsObj: function (hass, stateObj) {
+      return stateObj && stateObj.attributes && stateObj.attributes.config && stateObj.attributes.config.usps ? hass.states[stateObj.attributes.config.usps] : null;
     },
     computeMailObj: function (hass, stateObj) {
       return stateObj && stateObj.attributes && stateObj.attributes.config && stateObj.attributes.config.mail ? hass.states[stateObj.attributes.config.mail] : null;
@@ -195,8 +195,8 @@
       if (this.fedexObj != null) {
         this.nowFedex = this.fedexObj.state;
       }
-      if (this.packageObj != null) {
-        this.nowPackage = this.packageObj.state;
+      if (this.uspsObj != null) {
+        this.nowUsps = this.uspsObj.state;
       }
       if (this.mailObj != null) {
         this.nowMail = this.mailObj.state;
