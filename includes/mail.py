@@ -14,20 +14,6 @@ import subprocess
 import paho.mqtt.client as mosquitto
 from shutil import copyfile
 
-# MQTT Server Address and Port
-MQTT_SERVER = "localhost"
-MQTT_SERVER_PORT = 1883
-
-# MQTT User name and Password
-MQTT_USERNAME = "homeassistant"
-MQTT_PASSWORD = "PASSWORD"
-
-MQTT_USPS_MAIL_TOPIC = "/mail/usps/mail"
-MQTT_USPS_DELIVERING_TOPIC = "/mail/usps/delivering"
-MQTT_USPS_DELIVERED_TOPIC = "/mail/usps/delivered"
-MQTT_FEDEX_DELIVERING_TOPIC = "/mail/fedex/delivering"
-MQTT_FEDEX_DELIVERED_TOPIC = "/mail/fedex/delivered"
-MQTT_UPDATE_TIME_TOPIC =  "/mail/update/time"
 
 #Interval in seconds to check the email account
 SLEEP_TIME_IN_SECONDS = 300
@@ -42,6 +28,21 @@ FOLDER   = 'Inbox'
 GIF_FILE_NAME = "todays_mail.gif"
 GIF_MAKER_OPTIONS = 'convert -delay 300 -loop 0 -coalesce -set dispose background '
 IMAGE_OUTPUT_PATH = '/path/to/.homeassistant/www/mail_card/'
+
+# MQTT Server Address and Port
+MQTT_SERVER = "localhost"
+MQTT_SERVER_PORT = 1883
+
+# MQTT User name and Password
+MQTT_USERNAME = "homeassistant"
+MQTT_PASSWORD = "PASSWORD"
+
+MQTT_USPS_MAIL_TOPIC = "/mail/usps/mail"
+MQTT_USPS_DELIVERING_TOPIC = "/mail/usps/delivering"
+MQTT_USPS_DELIVERED_TOPIC = "/mail/usps/delivered"
+MQTT_FEDEX_DELIVERING_TOPIC = "/mail/fedex/delivering"
+MQTT_FEDEX_DELIVERED_TOPIC = "/mail/fedex/delivered"
+MQTT_UPDATE_TIME_TOPIC =  "/mail/update/time"
 
 # Login Method
 ###############################################################################
