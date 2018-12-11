@@ -36,15 +36,15 @@ class MailCard extends HTMLElement {
 	    <br>
       <span>
         <ul class="mail-variations right">
-           <li><span class="mail-iron-icon"><iron-icon icon="mdi:package-variant-closed"></iron-icon></span>UPS: ${ups}</li>
+           <li><span class="mail-iron-icon"><iron-icon icon="mdi:package-variant-closed"></iron-icon></span><a href="https://wwwapps.ups.com/mcdp" title="Open the UPS MyChoice site" target="_blank">UPS: ${ups}</a></li>
            <br>
-           <li><span class="mail-iron-icon"><iron-icon icon="mdi:package-variant-closed"></iron-icon></span>Fedex: ${fedex}</li>
+           <li><span class="mail-iron-icon"><iron-icon icon="mdi:package-variant-closed"></iron-icon></span><a href="https://www.fedex.com/apps/fedextracking" title="Open the Fedex site" target="_blank">Fedex: ${fedex}</a></li>
            <br>
         </ul>
         <ul class="mail-variations">
-           <li><span class="mail-iron-icon"><iron-icon icon="mdi:email-outline"></iron-icon></span>Mail: ${mail}</li>
+           <li><span class="mail-iron-icon"><iron-icon icon="mdi:email-outline"></iron-icon></span><a href="https://informeddelivery.usps.com/" title="Open the USPS Informed Delivery site" target="_blank">Mail: ${mail}<a></li>
            <br>
-           <li><span class="mail-iron-icon"><iron-icon icon="mdi:package-variant-closed"></iron-icon></span>USPS: ${usps_package}</li>
+           <li><span class="mail-iron-icon"><iron-icon icon="mdi:package-variant-closed"></iron-icon></span><a href="https://informeddelivery.usps.com/" title="Open the USPS Informed Delivery site" target="_blank">USPS: ${usps}</a></li>
            <br>
         </ul>
       </span>
@@ -52,7 +52,7 @@ class MailCard extends HTMLElement {
       <span class="usps_update">Checked: ${last_update}</span>
     </div>`;
   }
-
+	
   setConfig(config) {
     if (!config.mail || !config.usps_package) {
       throw new Error('Please define entities');
