@@ -16,8 +16,8 @@ homeassistant:
       custom_ui_state_card: custom-mail-card
       config:
         ups: sensor.mail_ups
-        fedex: sensor.mail_fedex_delivered
-        package: sensor.mail_usps_packages
+        fedex: sensor.mail_fedex_packages
+        usps: sensor.mail_usps_packages
         mail: sensor.mail_usps
         transit: sensor.mail_packages_in_transit
         today: sensor.mail_deliveries_today
@@ -70,9 +70,15 @@ homeassistant:
     sensor.mail_ups:
       <<: *customize
       friendly_name: UPS
+    sensor.mail_fedex_delivering:
+      <<: *customize
+      friendly_name: FedEx Delivering
     sensor.mail_fedex_delivered:
       <<: *customize
       friendly_name: FedEx Delivered
+    sensor.mail_fedex_packages:
+      <<: *customize
+      friendly_name: FedEx Packages
     input_text.mail_delivery_summary:
       <<: *customize  
     automation.notif_mail_delieveries:
@@ -88,21 +94,6 @@ frontend:
     - /local/mail_card/custom-mail-card.html
 
 group:
-  mail_deliveries:
-    name: Deliveries
-    entities:
-    - sensor.mail_update
-    - camera.mail_usps
-    - sensor.mail_deliveries_message
-    - sensor.mail_deliveries_today
-    - sensor.mail_fedex_delivered
-    - sensor.mail_packages_in_transit
-    - sensor.mail_update
-    - sensor.mail_ups
-    - sensor.mail_usps
-    - sensor.mail_usps_delivered
-    - sensor.mail_usps_delivering
-    - sensor.mail_usps_packages
   
   mail_delivery_summary:
     name: Mail Summary
@@ -159,13 +150,18 @@ sensor:
     value_template: "{{ value }}"
 
   - platform: mqtt
+    name: 'Mail FedEx Delivering'
+    state_topic: '/mail/fedex/delivering'
+    value_template: "{{ value }}"
+    
+  - platform: mqtt
     name: 'Mail FedEx Delivered'
     state_topic: '/mail/fedex/delivered'
     value_template: "{{ value }}"
 
   - platform: mqtt
     name: 'Mail Update'
-    state_topic: '/mail/update'
+    state_topic: '/mail/update/time'
     value_template: "{{ value }}"
 
 #Homeassistant FedEx Component Broken
@@ -187,8 +183,18 @@ sensor:
           - sensor.mail_usps_delivering
           - sensor.mail_usps_delivered
         unit_of_measurement: 'Packages'
-        value_template: "{{ states('sensor.mail_usps_delivering')|int - states('sensor.mail_usps_delivered')|int }}"
-        
+        value_template: "{{ states('sensor.mail_usps_delivering')|int - states('sensor.mail_usps_delivered')|int + states('sensor.mail_usps_delivered')|int }}"
+  
+  - platform: template
+    sensors:
+      mail_fedex_packages:
+        friendly_name: "FedEx Packages"
+        entity_id: 
+          - sensor.mail_fedex_delivering
+          - sensor.mail_fedex_delivered
+        unit_of_measurement: 'Packages'
+        value_template: "{{ states('sensor.mail_fedex_delivering')|int - states('sensor.mail_fedex_delivered')|int + states('sensor.mail_fedex_delivered')|int }}"
+
   - platform: template
     sensors:
       mail_packages_in_transit:
@@ -196,6 +202,7 @@ sensor:
         entity_id: 
           - sensor.mail_usps_delivering
           - sensor.mail_usps_delivered
+          - sensor.mail_fedex_delivering
           - sensor.mail_fedex_delivered
           - sensor.mail_ups
         unit_of_measurement: 'Packages'
@@ -214,7 +221,7 @@ sensor:
                  none
               {% endif %}
           {% endmacro %}
-          {{in_transit("sensor.mail_ups")|int + ( in_transit("sensor.mail_usps_delivering")|int - in_transit("sensor.mail_usps_delivered")|int ) }}
+          {{in_transit("sensor.mail_ups")|int + ( in_transit("sensor.mail_usps_delivering")|int - in_transit("sensor.mail_usps_delivered")|int ) + ( in_transit("sensor.mail_fedex_delivering")|int - in_transit("sensor.mail_fedex_delivered")|int )}}
       mail_deliveries_today:
         friendly_name: "Today's Deliveries"
         entity_id: 
