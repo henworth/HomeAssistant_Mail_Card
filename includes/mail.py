@@ -25,8 +25,9 @@ MQTT_PASSWORD = "PASSWORD"
 MQTT_USPS_MAIL_TOPIC = "/mail/usps/mail"
 MQTT_USPS_DELIVERING_TOPIC = "/mail/usps/delivering"
 MQTT_USPS_DELIVERED_TOPIC = "/mail/usps/delivered"
+MQTT_FEDEX_DELIVERING_TOPIC = "/mail/fedex/delivering"
 MQTT_FEDEX_DELIVERED_TOPIC = "/mail/fedex/delivered"
-MQTT_UPDATE_TIME_TOPIC =  "/mail/update"
+MQTT_UPDATE_TIME_TOPIC =  "/mail/update/time"
 
 #Interval in seconds to check the email account
 SLEEP_TIME_IN_SECONDS = 300
@@ -157,6 +158,25 @@ def usps_delivered_count(account):
 
     return count
 
+# gets FedEx delivering package count
+###############################################################################
+def fedex_delivering_count(account):
+    count = 0 
+    today = get_formatted_date()
+
+    rv, data = account.search(None, 
+              '(FROM "FedEx Delivery Manager" SUBJECT "Delivery scheduled for today" SINCE "' + 
+              today + '")')
+
+    if rv == 'OK':
+        count = len(data[0].split())
+        #use to test
+        #count = 4
+
+    print_message("Found '{}' FedEx packages out for delivery".format(count))
+
+    return count
+
 # gets FedEx delivered package count
 ###############################################################################
 def fedex_delivered_count(account):
@@ -175,13 +195,13 @@ def fedex_delivered_count(account):
     print_message("Found '{}' FedEx packages delivered".format(count))
 
     return count
-    
+
 # gets update time
 ###############################################################################
 def update_time():
     updated = datetime.datetime.now().strftime('%b-%d-%Y %I:%M %p')
     print_message("Update Time '{}'".format(updated))
-
+    
     return updated
     
 # Prints message to console
@@ -247,6 +267,10 @@ try:
         mqttc.publish(MQTT_USPS_DELIVERED_TOPIC, str(pc), qos=0, retain=True)
         
         # Get the FedEx delivery count and drop it in the MQTT
+        pc = fedex_delivering_count(account)
+        mqttc.publish(MQTT_FEDEX_DELIVERING_TOPIC, str(pc), qos=0, retain=True)
+        
+        # Get the FedEx delivery count and drop it in the MQTT
         pc = fedex_delivered_count(account)
         mqttc.publish(MQTT_FEDEX_DELIVERED_TOPIC, str(pc), qos=0, retain=True)
         
@@ -260,7 +284,7 @@ try:
         if mc == 0:
             os.remove(IMAGE_OUTPUT_PATH + GIF_FILE_NAME)
             copyfile(IMAGE_OUTPUT_PATH + "nomail.gif", IMAGE_OUTPUT_PATH + GIF_FILE_NAME)
-
+        
         #Adding sleep to attempt to control hamqtt connection reset errors and information not transfering
         time.sleep(5)
         # disconnect from MQTT
