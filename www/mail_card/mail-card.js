@@ -21,7 +21,7 @@ class MailCard extends HTMLElement {
     const summary = hass.states[this.config.summary].state;
     const ups = hass.states[this.config.ups].state;
     const fedex = hass.states[this.config.fedex].state;
-    const usps_package = hass.states[this.config.usps_package].state;
+    const usps = hass.states[this.config.usps].state;
     const mail = hass.states[this.config.mail].state;
     const last_update = hass.states[this.config.last_update].state;
     const mail_image = this.config.mail_image + "?v=" + datetime;
@@ -52,9 +52,9 @@ class MailCard extends HTMLElement {
       <span class="usps_update">Checked: ${last_update}</span>
     </div>`;
   }
-	
+
   setConfig(config) {
-    if (!config.mail || !config.usps_package) {
+    if (!config.mail || !config.usps) {
       throw new Error('Please define entities');
     }
     this.config = config;
